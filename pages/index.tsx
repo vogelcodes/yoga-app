@@ -36,7 +36,7 @@ export default function Home() {
             <form className={styles.form}> 
               <input type="email" placeholder="E-mail" name="" id="email"/>
               <input type="password" placeholder="Senha" name="" id=""/>
-              <input type="button" value="Login" />
+              <input className={styles.inactive} type="button" value="Login" />
               <GoogleButton label="Entrar com Google" onClick={()=>signIn('google')} />
               
             </form>
