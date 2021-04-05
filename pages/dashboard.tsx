@@ -21,7 +21,7 @@ export default function Dashboard() {
     
     function handleLogout() {
       router.push("/")
-        signOut()
+        signOut({ callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })
       
     }
     function onChange(nextValue) {
@@ -31,7 +31,6 @@ export default function Dashboard() {
   
    
   const user = session?.user.name || ''
-  console.log(session)
 
   return (
     <div className={styles.container}>
@@ -40,12 +39,18 @@ export default function Dashboard() {
         <link rel="icon" href="/lotus-yoga.svg" />
       </Head>
         <main className={styles.main}>
+          <div className={styles.header}>
           <div className={styles.logo}>
           <img src="/lotus-yoga.svg" alt="lotus-flower" height="48" width="48"/>
           <span>YogaApp</span>
           </div>
             <div className={styles.greeting}>
-              Olá, {user} <span onClick={handleLogout}>Sair</span>
+             <div>
+               Olá, {user} <span onClick={()=>{        signOut({ callbackUrl: 'https://yoga-app.vogelcodes.com/' })
+}}>Sair</span>
+               </div>
+            <img className={styles.avatar} height="36px" width="36px" src={session?.user.image}></img>
+            </div>
             </div>
 
           <h1>Próximas Aulas</h1>
@@ -57,35 +62,40 @@ export default function Dashboard() {
           </div>
 
           <div className={styles.details}>
-              <h3>{value.toLocaleDateString('pt-br')}</h3>
-              <div className={styles.classList}>
-                  <li>
-                      <span>10:00</span>
-                      <h4>Nathi</h4>
-                      <div className={styles.actions}>
-                      <button>Confirmar</button>
-                      </div>
-                  </li>
-                  <li>
-                      <span>14:00</span>
-                      <h4>Yasmin</h4>
-                      <div className={styles.actions}>
+              <h3>{}{value.toLocaleString('pt-br', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</h3>
+              <table className={styles.classList}>
+                  <tr>
+                      <td>10:00</td>
+                      <td>Nathi</td>
+                      <td>
 
-                      <button>Confirmar</button>
-                      </div>
+                      <div>Confirmar</div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>14:00</td>
+                      <td>Yasmin</td>
+                      <td>
 
-                  </li>
-                  <li>
-                      <span>16:00</span>
-                      <h4>Nathi</h4>
-                      <div className={styles.actions}>
-                        <button className={styles.active}>Confirmado</button>
-                        <button className={styles.cancel}>X</button>
-                      </div>
-                  </li>
+
+                      <div>Confirmar</div>
+                      </td>
+
+                  </tr    >
+                  <tr   >
+                      <td>16:00</td>
+                      <td>Nathi</td>
+                      <td>
+
+                        <div className={styles.active}>Confirmado</div>
+                      </td>
+                      <td>
+                        <div className={styles.cancel}>X</div>
+                      </td>
+                  </tr    >
                   
                 
-              </div>
+              </table>
           </div>
       </main>
     

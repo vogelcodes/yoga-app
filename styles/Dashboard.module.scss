@@ -26,6 +26,12 @@
     color:rgb(41, 41, 41);
   }
 }
+.header{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .footer {
   width: 100%;
   height: 100px;
@@ -46,13 +52,22 @@
 }
 
 
-
 .logo {
   display: flex;
   align-items: center;
   gap: .5rem;
 }
+.avatar {
+  border-radius: 100%;
+  border-width: 2px;
+
+}
 .greeting {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  
+  
   span{
     text-decoration: underline;
     font-size: small;
@@ -65,20 +80,20 @@
 .classList{
   padding: .5rem;
   
-  li {
+  tr {
     display: flex;
     align-items: center;
-    gap: 3rem;
-    h4 {
-      width: 4rem;
+    td {
+      padding: .5rem ;
     }
-    button {
+    div {
       padding-left: .8rem;
       padding-right: .8rem;
       height: 2rem;
       border-radius: 2rem;
       border-style: none;
       filter: drop-shadow(.1rem .1rem 0.1rem #ababab);
+      background-color: rgb(160, 216, 174);
     }
   }
 }
@@ -92,11 +107,11 @@
 }
 
 .active {
-  background-color: rgb(22, 177, 60);
+  background-color: rgb(22, 177, 60) !important;
   color: #fafafa;
 }
 .cancel {
-  background-color: rgb(231, 166, 166);
+  background-color: rgb(231, 166, 166)  !important;
 }
 
 @media (max-width: 600px) {
