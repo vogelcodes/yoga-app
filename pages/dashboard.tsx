@@ -8,17 +8,26 @@ import styles from '../styles/Dashboard.module.scss'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { Footer } from '../components/footer/footer';
+import { api } from '../services/api';
+
+interface Class {
+  title: String;
+}
 
 export default function Dashboard() {
     const router = useRouter()
     const [value, setValue] = useState(new Date());
+    const [classes, setClasses] = useState([]);
     const [session] = useSession()
-    useEffect(()=> {
-      if (!session) {
-        router.push("/")
-      }
-    }, )
-    
+    // useEffect(()=> {
+    //   if (!session) {
+    //     router.push("/")
+    //   }
+    // }, )
+     useEffect( ()=>{
+      const res = api.get('/classes')
+      console.log(res)
+    },)
     function handleLogout() {
       router.push("/")
         signOut({ callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })
@@ -30,7 +39,7 @@ export default function Dashboard() {
 
   
    
-  const user = session?.user.name || ''
+  const user = session?.user.name || 'User'
 
   return (
     <div className={styles.container}>
@@ -38,8 +47,7 @@ export default function Dashboard() {
         <title>YogaApp | Dashboard</title>
         <link rel="icon" href="/lotus-yoga.svg" />
       </Head>
-        <main className={styles.main}>
-          <div className={styles.header}>
+          <div  className={styles.header}>
           <div className={styles.logo}>
           <img src="/lotus-yoga.svg" alt="lotus-flower" height="48" width="48"/>
           <span>YogaApp</span>
@@ -49,17 +57,18 @@ export default function Dashboard() {
                Olá, {user} <span onClick={()=>{        signOut({ callbackUrl: 'https://yoga-app.vogelcodes.com/' })
 }}>Sair</span>
                </div>
-            <img className={styles.avatar} height="36px" width="36px" src={session?.user.image}></img>
+            <img className={styles.avatar} height="36px" width="36px" src={session?.user.image || "/lotus-yoga.svg"}></img>
             </div>
             </div>
+        <main className={styles.main}>
 
           <h1>Próximas Aulas</h1>
-          <div className={styles.calendar}>
+          {/* <div className={styles.calendar}>
           <Calendar 
             onChange={onChange}
             value={value}
             />
-          </div>
+          </div> */}
 
           <div className={styles.details}>
               <h3>{}{value.toLocaleString('pt-br', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</h3>

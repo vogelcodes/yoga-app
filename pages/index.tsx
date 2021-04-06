@@ -5,8 +5,11 @@ import GoogleButton from 'react-google-button'
 import FacebookLogin from 'react-facebook-login'
 import styles from '../styles/Home.module.scss'
 import { Footer } from '../components/footer/footer'
+import { useState } from 'react'
 
 export default function Home() {
+  const [email, setEmail ] = useState('');
+  const [name, setName ] = useState('');
   const [session] = useSession()
   const router = useRouter()
   const handleLogin = (e) => {
@@ -17,6 +20,8 @@ export default function Home() {
   if(session){
     router.push("/dashboard")
   }
+  
+ 
 
   
 
@@ -37,9 +42,14 @@ export default function Home() {
           <span>YogaApp</span>
           <div>
             <form className={styles.form}> 
-              <input type="email" placeholder="E-mail" name="" id="email"/>
-              <input type="password" placeholder="Senha" name="" id=""/>
-              <input className={styles.inactive} type="button" value="Login" />
+              <input 
+                type="email" 
+                placeholder="E-mail" 
+                id="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}/>
+              {/* <input  placeholder="Nome" id="name" value={name} onChange={(e)=> setName(e.target.value)}/> */}
+              <input className={styles.button} type="button" value="Login" onClick={()=>{console.log(email, name); signIn('email', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard', email, name }, )}}  />
               <GoogleButton label="Entrar com Google" onClick={()=>signIn('google', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })} />
               <FacebookLogin onClick={()=>signIn('facebook', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })} />
             </form>

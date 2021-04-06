@@ -1,1 +1,1 @@
-##App de gerenciamento de aulas de estúdio de yoga
+## App de gerenciamento de aulas de estúdio de yoga
