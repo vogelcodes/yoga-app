@@ -3,6 +3,8 @@ import Head from 'next/head'
 import { signIn, useSession } from 'next-auth/client'
 import GoogleButton from 'react-google-button'
 import FacebookLogin from 'react-facebook-login'
+import { Button, ButtonGroup } from "@chakra-ui/react"
+import { FaGoogle, FaFacebook} from 'react-icons/fa'
 import styles from '../styles/Home.module.scss'
 import { Footer } from '../components/footer/footer'
 import { useState } from 'react'
@@ -30,8 +32,7 @@ export default function Home() {
       
       <Head>
         <title>YogaApp | Home</title>
-        <link rel="icon" href="/lotus-yoga.svg" />
-        
+      
 
       </Head>
       <div id="fb-root"></div>
@@ -42,16 +43,20 @@ export default function Home() {
           <span>YogaApp</span>
           <div>
             <form className={styles.form}> 
-              <input 
+              {/* <input 
                 type="email" 
                 placeholder="E-mail" 
                 id="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}/>
               {/* <input  placeholder="Nome" id="name" value={name} onChange={(e)=> setName(e.target.value)}/> */}
-              <input className={styles.button} type="button" value="Login" onClick={()=>{console.log(email, name); signIn('email', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard', email, name }, )}}  />
-              <GoogleButton label="Entrar com Google" onClick={()=>signIn('google', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })} />
-              <FacebookLogin onClick={()=>signIn('facebook', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })} />
+              {/* <input className={styles.button} type="button" value="Login" onClick={()=>{console.log(email, name); signIn('email', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard', email, name }, )}}  /> */}
+              <Button colorScheme="facebook" leftIcon={<FaFacebook />} onClick={()=>signIn('facebook', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })}>
+    Entar com Facebook
+  </Button>
+  <Button colorScheme="blue" leftIcon={<FaGoogle />} onClick={()=>signIn('google', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })}>
+    Entrar com Google
+  </Button>
             </form>
           </div>
       </main>

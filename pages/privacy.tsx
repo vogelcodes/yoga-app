@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Privacy() {
     return (
         <>
         <h1>Privacy Policy of VogelCodes</h1>

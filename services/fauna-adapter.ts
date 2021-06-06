@@ -43,6 +43,7 @@ const Adapter = (config , options = {}) => {
           name: profile.name,
           email: profile.email,
           image: profile.image,
+          role: "user",
           emailVerified: profile.emailVerified
             ? q.Time(profile.emailVerified.toISOString())
             : null,
