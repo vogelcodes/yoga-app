@@ -21,17 +21,17 @@ export default NextAuth({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET
     }),
-    // Providers.Email({
-    //   server: {
-    //     host: process.env.EMAIL_SERVER_HOST,
-    //     port: 587,
-    //     auth: {
-    //       user: process.env.EMAIL_SERVER_USER,
-    //       pass: process.env.EMAIL_SERVER_PASSWORD
-    //     }
-    //   },
-    //   from: process.env.EMAIL_FROM
-    // })
+     Providers.Email({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: 587,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD
+        }
+      },
+      from: process.env.EMAIL_FROM
+    })
     // ...add more providers here
   ],
   callbacks: {

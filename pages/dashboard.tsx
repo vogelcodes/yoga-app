@@ -2,7 +2,7 @@ import {useRouter} from 'next/router'
 import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import { signOut, useSession } from 'next-auth/client'
-import { Box, Image, HStack, Grid, GridItem, Flex, Spacer, Button, Badge, Text, Heading, VStack} from '@chakra-ui/react'
+import { Box, Img, HStack, Grid, GridItem, Flex, Spacer, Button, Badge, Text, Heading, VStack} from '@chakra-ui/react'
 import Calendar from 'react-calendar';
 import { query as q, Space } from 'faunadb'
 import { fauna as faunaClient } from '../services/fauna'
@@ -13,6 +13,7 @@ import 'react-calendar/dist/Calendar.css';
 import { Footer } from '../components/footer/footer';
 
 import { api } from '../services/api';
+import { AdminPanel } from '../components/admin/adminPanel';
 
 interface Class {
   title: String;
@@ -24,11 +25,11 @@ export default  function Dashboard({aulas}){
   // const [classes, setClasses] = useState([]);
   const [session] = useSession()
   
-  // useEffect(()=> {
-    //   if (!session) {
-    //     router.push("/")
-    //   }
-    // }, )
+  useEffect(()=> {
+      if (!session) {
+        router.push("/")
+      }
+    }, )
      
     // function handleLogout() {
     //   router.push("/")
@@ -41,25 +42,24 @@ export default  function Dashboard({aulas}){
 
   
     const user = session?.user.name || 'User'
-    console.log(session);
   return (
-    <Flex bg="#F4CCCC" direction="column" minH="100vh "  justify="space-between" >
+    <Flex sx={{"-webkit-user-select": "none"}} bg="#F4CCCC" direction="column" minH="100vh "  justify="space-between" >
       <Head>
       <title>YogaApp | Dashboard</title>
 
       </Head>
           <Flex py="1" alignContent="center" bg="#DCC6EA" px={["0","4", "8", "16", "32"]} >
-          <HStack px={["1","2"]} borderRadius="8" bg="gray.100">
-          <Image borderRadius="full" src="/lotus-yoga.svg" alt="lotus-flower" h="12" w="12"/>
+          <HStack px={["1","2"]} borderRadius="8" >
+          <Img borderRadius="full" src="/lotus-yoga.svg" alt="lotus-flower" h="12" w="12"/>
           <Text display={["none", "block"]} >YogaApp</Text>
           </HStack>
           <Spacer />
           <Spacer />
-            <HStack p="2" borderRadius="8" bg="gray.100">
+            <HStack p="1" borderRadius="8" bg="gray.100">
               <VStack>
 
           <Badge h="2">{session?.user.role}</Badge>
-               <Image borderRadius="full" height="36px" width="36px" src={session?.user.image || "/lotus-yoga.svg"}/>
+               <Img borderRadius="full" h="9" w="9" src={session?.user.image || "/lotus-yoga.svg"}/>
               </VStack>
              <div>
                Olá, {user} <Button size="xs" colorScheme="red" onClick={()=>{        signOut({ callbackUrl: 'https://yoga-app.vogelcodes.com/' })
@@ -70,10 +70,14 @@ export default  function Dashboard({aulas}){
             </Flex>
         <Flex px={["4", "8", "16", "32"]} direction="column" mx="auto"  alignContent="start" flex="1">
 
-          {(session?.user.role == "member" || session?.user.role == "admin")  ?
+          {
+          !session ? <Badge>Loading</Badge>: 
+          session?.user.role == "member" ?
             <Box>
 
-          <Heading py="3" mx="auto" color="#58012C">Aulas da Semana</Heading>
+          <Heading py="3" mx="auto" color="#58012C">Aulas Marcadas</Heading>
+          <Text alignSelf="center">Não há aulas marcadas</Text>
+          <Heading py="3" mx="auto" color="#58012C">Aulas Disponíveis</Heading>
 
           <div >
               <Grid templateColumns={["1fr","1fr","repeat(2, 1fr)","repeat(3, 1fr)"]} >
@@ -127,9 +131,9 @@ export default  function Dashboard({aulas}){
                 
 
 <Flex pt="2">
-<Badge color="gray.50" bg="green.400" >Confirmado</Badge>
+{/* <Badge color="gray.50" bg="green.400" >Confirmado</Badge> */}
 <Spacer/>
-<Button size="xs" colorScheme="red" >Cancelar</Button>
+<Button size="xs" colorScheme="green" >Confirmar</Button>
 </Flex>          
 </Flex>
                 </GridItem>
@@ -145,21 +149,15 @@ export default  function Dashboard({aulas}){
               </Grid>
           </div>
     
-        </Box> : <Text>Ooops, parece que você não é assinante. Assine já!</Text>}
+        </Box> : session?.user.role == "admin" ? <AdminPanel /> : <Text>Ooops, parece que você não é assinante. Assine já!</Text>}
       </Flex>
     
 
-      <Footer/>
     </Flex>
   )
 }
 export async function getServerSideProps() {
-  const query: any = await faunaClient.query(q.Map(
-    q.Paginate(q.Match(q.Index("all_classes")),
-    {}),
-    (classRef) => q.Get(classRef)
-    
-  ))
+  const query: any = await faunaClient.query(q.Call(q.Function("get_week_classes")))
   const classes: [] = query.data;
   // console.log(JSON.stringify(classes));
    
