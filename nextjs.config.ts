@@ -12,7 +12,7 @@ module.exports = {
       // Note: subdomains must be included in the domain value to be matched e.g. "fr.example.com".
       domains: [
         {
-          domain: 'yoga.vogelcodes.com',
+          domain: 'yoga-app.vogelcodes.com',
           defaultLocale: 'pt-br',
         }
       ],
