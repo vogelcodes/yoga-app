@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: 'https://yoga-app.vogelcodes.com/api'
+    baseURL: 'https://yoga.vogelcodes.com/api'
 })
 export const zoomAPI = axios.create({
     baseURL: 'https://api.zoom.us/v2',
