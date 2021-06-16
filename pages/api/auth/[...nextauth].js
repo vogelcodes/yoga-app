@@ -4,7 +4,6 @@ import Providers from 'next-auth/providers'
 import { query as q } from 'faunadb'
 import { fauna as faunaClient } from '../../../services/fauna'
 import { Adapter } from '../../../services/fauna-adapter'
-import { WithAdditionalParams } from 'next-auth/_utils'
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -36,8 +35,8 @@ export default NextAuth({
   ],
   callbacks: {
     async session(session, userdata){
-      const userData: any = await faunaClient.query(q.Get(q.Match(q.Index("user_by_email"), q.Casefold(userdata.email))))
-      const sessionWithRole: WithAdditionalParams<Session> = {...session }
+      const userData = await faunaClient.query(q.Get(q.Match(q.Index("user_by_email"), q.Casefold(userdata.email))))
+      const sessionWithRole = {...session }
       sessionWithRole.user.role = userData.data.role
       return sessionWithRole
     },
