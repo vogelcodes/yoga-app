@@ -22,11 +22,11 @@ export const Login = () => (
         <LoginForm />
         <DividerWithText mt="6">ou  entre com</DividerWithText>
         <SimpleGrid mt="6" columns={2} spacing="3">
-          <Button color="currentColor" variant="outline" onClick={()=>signIn('facebook', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })}>
+          <Button color="currentColor" variant="outline" onClick={()=>signIn('facebook', { callbackUrl: 'https://yoga.vogelcodes.com/dashboard' })}>
             <VisuallyHidden>Logar com Facebook</VisuallyHidden>
             <FaFacebook />
           </Button>
-          <Button color="currentColor" variant="outline" onClick={()=>signIn('google', { callbackUrl: 'https://yoga-app.vogelcodes.com/dashboard' })}>
+          <Button color="currentColor" variant="outline" onClick={()=>signIn('google', { callbackUrl: 'https://yoga.vogelcodes.com/dashboard' })}>
             <VisuallyHidden>Logar com Google</VisuallyHidden>
             <FaGoogle />
           </Button>
