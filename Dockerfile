@@ -9,7 +9,7 @@ COPY package.json /usr/src/app
 COPY yarn.lock /usr/src/app
 
 # Production use node instead of root
-USER node
+# USER node
 
 RUN export NODE_OPTIONS=--openssl-legacy-provider
 
